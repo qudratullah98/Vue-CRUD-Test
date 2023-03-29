@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="alert alert-success" role="alert" v-if="elertMassage">
+  User Created Successfully !
+</div>
     <div class="container">
       <div class="row">
         <div class="col-sm-8 col-md-6 mx-auto">
@@ -89,6 +92,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      elertMassage:false,
       newUser: {
         name: "",
         number: "",
@@ -137,6 +141,13 @@ export default {
       axios
         .post("http://localhost:8000/api/users/create/", formData)
         .then((response) => {
+          this.elertMassage=true
+          this.newUser={}
+        setTimeout(() => {
+          console.log(response.data.message)          
+          this.elertMassage=false
+          this.message=response.data.message
+      }, 5000);
           console.log(response.data);
         })
         .catch((error) => {
